@@ -167,6 +167,17 @@ html, body {
     display: none;
     background-color: $nav-subitem-bg;
     font-weight: 500;
+    .tocify-item>a {
+      padding-left: $nav-padding + $nav-indent;
+      font-size: 12px;
+    }
+    .tocify-subheader {
+      .tocify-item>a {
+        // Styling here for a level 2 nesting. For example ->
+        padding-left: $nav-padding + $nav-indent * 2;
+        font-size: 12px;
+      }
+    }
   }
 
   .toc-h2 {
@@ -340,7 +351,7 @@ html, body {
   }
 
   // the div is the tocify hidden div for placeholding stuff
-  &>h1, &>h2, &>div {
+  &>h1, &>h2, &>h3, &>div {
     clear:both;
   }
 
@@ -612,4 +623,13 @@ html, body {
 
 .highlight, .highlight .w {
   background-color: $code-bg;
+}
+
+
+/* Custom styles */
+
+.logo-third {
+  height: 60px;
+  display: block;
+  margin: 10px auto;
 }
