@@ -2,302 +2,358 @@
 
 ## What is a Dataset?
 
-A data set represents the raw data. We support four dataset types with different providers. It's also possible to have the same dataset on different applications.
+A dataset abstracts the data that can be obtained from several sources into a common interface. There are several data providers supported in the API, and each of those has a different provider. Datasets can belong to several applications.
 
 ## Supported dataset sources
 
-### Carto
-***(connectorType: 'rest', provider: 'cartodb')***
-<a href="https://www.carto.com" target="_blank"><img src="images/dataset/carto.png" class="logo-third"/></a>
-CARTO is an open, powerful, and intuitive platform for discovering and predicting the key insights underlying the location data in our world.
+### Third party Dataset connectors
 
-### ArcGIS
-**(connectorType: 'rest', provider: 'featureservice')**
-<a href="https://www.arcgis.com/features/index.html" target="_blank"><img src="https://www.arcgis.com/features/img/logo-esri.png" class="logo-third"/></a>
-ArcGIS Online is a Complete, Cloud-Based Mapping Platform
+For data stored on third party services.
+
+#### Carto
+
+**`(connectorType: 'rest', provider: 'cartodb')`**<br>
+[![](images/dataset/carto.png)](https://www.carto.com) CARTO is an open, powerful, and intuitive map platform for discovering and predicting the key insights underlying the location data in our world.
+
+### ArcGIS Feature service
+
+**`(connectorType: 'rest', provider: 'featureservice')`** [![](https://www.arcgis.com/features/img/logo-esri.png)](https://www.arcgis.com/features/index.html)<br>
+ArcGIS for server is a Complete, Cloud-Based Mapping Platform.
 
 ### Google Earth Engine
-**(connectorType: 'rest', provider: 'gee')**
-<a href="https://earthengine.google.com/" target="_blank"><img src="https://earthengine.google.com/static/images/GoogleEarthEngine_Grey_108.png" class="logo-third"/></a>
+
+**`(connectorType: 'rest', provider: 'gee')`** [![](https://earthengine.google.com/static/images/GoogleEarthEngine_Grey_108.png)](https://earthengine.google.com/)<br>
 Google Earth Engine combines a multi-petabyte catalog of satellite imagery and geospatial datasets with planetary-scale analysis capabilities and makes it available for scientists, researchers, and developers to detect changes, map trends, and quantify differences on the Earth's surface.
 
-### CSV
-**(connectorType: 'document', provider: 'csv')**
+#### Web Map Services ([WMS](http://www.opengeospatial.org/standards/wms))
 
-### JSON
-**(connectorType: 'json', provider: 'rwjson')**
+**`(connectorType: 'wms', provider: 'wms')`**
 
-### WMS
-**(connectorType: 'wms', provider: 'wms')**
+WMS connector provides access to data served through [OGC WMS](http://www.opengeospatial.org/standards/wms) protocol standard.
 
-## How obtain all datasets
+#### Rasdaman (Raster Data Manager)
 
-To obtain all datasets:
+**`(connectorType: 'rest', provider: 'rasdaman')`**<br>
+[Rasdaman](http://www.rasdaman.com/) is a database with capabilities for storage, manipulation and retrieval of multidimensional arrays.
+
+### Internal storage connectors
+
+For data stored in our system.
+
+#### NEX-GDDP
+
+**`(connectorType: 'rest', provider: 'nexgddp')`**<br>
+The NASA Earth Exchange Global Daily Downscaled Projections ([NEX-GDDP](https://nex.nasa.gov/nex/projects/1356/)) dataset is comprised of downscaled climate scenarios for the globe that are derived from the General Circulation Model (GCM) runs conducted under the Coupled Model Intercomparison Project Phase 5 (CMIP5) and across two of the four greenhouse gas emissions scenarios known as Representative Concentration Pathways (RCPs).
+
+#### Comma-Separated Values (CSV)
+
+**`(connectorType: 'document', provider: 'csv')`**<br>
+Arbitrary Comma-Separated Values data
+
+##### Tab-Separated Values (TSV)
+
+**`(connectorType: 'document', provider: 'tsv')`**<br>
+Arbitrary tab-Separated Values data
+
+#### JavaScript Object Notation (JSON)
+
+**`(connectorType: 'document', provider: 'json')`**<br>
+Arbitrary [json](http://www.json.org/) structured data
+
+#### XML
+
+**`(connectorType: 'document', provider: 'xml')`**<br>
+Arbitrary [XML](https://www.w3.org/TR/2006/REC-xml11-20060816/) data documents
+
+## Getting all datasets
+
+This endpoint will allow to get all datasets available in the API:
+
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v1/dataset
 ```
 
-<aside class="success">
-Remember — the response is jsonapi format
-</aside>
-
-> Example response:
+> Response:
 
 ```json
 {
-   "data":[
-      {
-        "id": "06c44f9a-aae7-401e-874c-de13b7764959",
+    "data": [
+        {
+        "id": "00f2be42-1ee8-4069-a55a-16a988f2b7a0",
         "type": "dataset",
         "attributes": {
-          "application": [
-            "prep",
-            "rw"
-          ],
-          "name": "Historical Precipitation -- U.S. (Puget Sound Lowlands)",
-          "subtitle": null,
-          "dataPath": null,
-          "attributesPath": null,
-          "connectorType": "document",
-          "provider": "csv",
-          "userId": null,
-          "connectorUrl": "https://raw.githubusercontent.com/fgassert/PREP-washington-observed-data/master/observed_precip.csv",
-          "tableName": "index_06c44f9aaae7401e874cde13b7764959",
-          "topics": [],
-          "tags": [
-            "",
-            "observed",
-            "washington",
-            "local",
-            "puget sound",
-            "climate-weather",
-            "precipitation"
-          ],
-          "legend": {},
-          "clonedHost": {
-            "hostProvider": null,
-            "hostUrl": null,
-            "hostId": null,
-            "hostType": null,
-            "hostPath": null
-          },
-          "status": "saved",
-          "overwrite": false
-        }
-      },
-   ],
-   "links":{
-      "first":"https://api.resourcewatch.org/v1/dataset?page%5Bnumber%5D=1",
-      "prev":"https://api.resourcewatch.org/v1/dsataset?page%5Bnumber%5D=1",
-      "next":"https://api.resourcewatch.org/v1/dsataset?page%5Bnumber%5D=2&page%5Bsize%5D=10",
-      "last":"https://api.resourcewatch.org/v1/dsataset?page%5Bnumber%5D=64&page%5Bsize%5D=10",
-      "self":"https://api.resourcewatch.org/v1/dsataset?page%5Bnumber%5D=1&page%5Bsize%5D=10"
-   }
+            "name": "Glad points",
+            "slug": "Glad-points-1490086842129",
+            "type": null,
+            "subtitle": null,
+            "application": ["data4sdgs"],
+            "dataPath": null,
+            "attributesPath": null,
+            "connectorType": "document",
+            "provider": "csv",
+            "userId": "58333dcfd9f39b189ca44c75",
+            "connectorUrl": "http://gfw2-data.s3.amazonaws.com/alerts-tsv/glad_headers.csv",
+            "tableName": "data",
+            "status": "pending",
+            "published": true,
+            "overwrite": false,
+            "verified": false,
+            "blockchain": {},
+            "env": "production",
+            "geoInfo": false,
+            "legend": {
+                "date": [],
+                "region": [],
+                "country": []
+                },
+            "clonedHost": {},
+            "errorMessage": null,
+            "updatedAt": "2017-01-13T10:45:46.368Z",
+            "widgetRelevantProps": [],
+            "layerRelevantProps": []
+            }
+        },
+    ...
+  ],
+  "links": {
+    "self": "http://api.resourcewatch.org/v1/dataset?page[number]=1&page[size]=10",
+    "first": "http://api.resourcewatch.org/v1/dataset?page[number]=1&page[size]=10",
+    "last": "http://api.resourcewatch.org/v1/dataset?page[number]=99&page[size]=10",
+    "prev": "http://api.resourcewatch.org/v1/dataset?page[number]=1&page[size]=10",
+    "next": "http://api.resourcewatch.org/v1/dataset?page[number]=2&page[size]=10"
+  },
+  "meta": {
+    "total-pages": 99,
+    "total-items": 990,
+    "size": 10
+  }
 }
 ```
 
-### Filter params
+### Slug & dataset-id
 
-Available filters:
+Datasets have an auto-generated and unique slug and id that allows the user to get, create, update, query or clone that dataset.
 
-| Field         | Description           | Type
-| ------------- |:-------------:| -----:|
-| ids           | Filter the datasets by dataset ids                              | Text
-| name           | Filter the datasets by dataset name                              | Text
-| connectorType| Filter the datasets by dataset type (rest,json,wms,document)    | Text
-| sort          | Sort json response by specific attributes                       | Text
-| status        | Filter datasets on status (pending, active, disabled, all)      | Text
-| provider      | Filter datasets on provider (cartodb, json, etc..)              | Text
-| app           | Filter datasets on application (For filter or -- prep,gfw,etc.. -- for filter and prep@gfw@prep@etc..) | Text
-| includes      | Include relational resources (metadata,layer,widget,vocabulary) | Text
+The dataset slug and the id cannot be updated even if the name changes.
 
+### Error Message
 
-> Return the datasets filtered whose id contains d02df2f6-d80c-4274-bb6f-f062061655c4
+When a dataset is created the status is set to "pending" by default. Once the adapter validates the dataset, the status is changed to "saved". If the validation fails, the status will be set to "failed" and the adapter will also set an error message indicating the reason.
+
+### Filters
+
+The dataset list provided by the endpoint can be filtered with the following attributes:
+
+Filter        | Description                                                                  | Accepted values
+------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+name          | Allow us to filter by name                                                   | any valid text
+type          | Allow us to distinguish between tabular and raster datasets                  | `raster` or `tabular`
+app           | Aplications to which this dataset is being used                              | Available Aplications like: `["data4sdgs","gfw","rw","aqueduct","prep","forest-atlas","gfw-climate","aqueduct-water-risk","test","gfw-pro","globalforestwatch", "ghg-gdp"]`
+connectorType |                                                                              | `rest` or `document`
+provider      | Dataset provider this include inner connectors and 3rd party ones            | [A valid dataset provider](##supported-dataset-sources)
+userId        | the user who registered the dataset                                          | valid id
+status        | the internal dataset status at connection time                               | `pending`, `saved` or `failed`
+published     |                                                                              | `true`or `false`
+env           | If the dataset is in preproduction envirenment or in production one          | `production`or `preproduction`
+overwritted   | If the data can be overwritten (only for being able to make dataset updates) | `true`or `false`
+verify        | If this dataset contains data that is verified using blockchain              | `true`or `false`
+protected     | If it's a protected layer                                                    | `true`or `false`
+geoInfo       | If it contains intersectable geographical info                               | `true`or `false`
+
+> Filtering datasets
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?ids=d02df2f6-d80c-4274-bb6f-f062061655c4
+curl -X GET https://api.resourcewatch.org/v1/dataset?name=birds&provider=cartodb
 ```
 
-> Return the datasets filtered by connector_type
+> For inclusive filtering with array props use '@'
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?connector_type=wms
+curl -X GET https://api.resourcewatch.org/v1/dataset?app=gfw@rw@prep
 ```
 
-> Sort by name
+### Sorting
+
+#### Basics of sorting
+
+The API currently supports sorting by means of the `sort` parameter. 
+
+> Sorting datasets
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v1/dataset?sort=name
 ```
 
-> Filter datasets by status
+Multiple sorting criteria can be used, separating them by commas.
+
+
+> Sorting datasets by multiple criteria
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?status=failed
+curl -X GET https://api.resourcewatch.org/v1/dataset?sort=name,description
 ```
 
-> Return the datasets filtered whose applications contain prep
+You can specify the sorting order by prepending the criteria with either `-` or `+`. By default, `asc` order is assumed.
+
+> Explicit order of sorting
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?app=prep
+curl -X GET https://api.resourcewatch.org/v1/dataset?sort=-name,+description
 ```
 
-> Return the datasets filtered whose provider contain rwjson
+#### Special sorting criteria
+
+There are four special sorting criteria:
+
+- `metadata`: delegates sorting to the metadata component, sorting by the name field of the metadata.
+- `most-visited` delegates sorting to the graph component, sorting by the datasets that have been queried more frequently.
+- `most-favorited`: delegates sorting to the graph component, sorting by the datasets that have been more favourited.
+- `relevance`: delegates sorting to the metadata component, sorting by the datasets which metadata better match the search criteria. Can only be used in conjunction with a `search` parameter. Does not support ascending order. 
+
+Special search criteria must be used as sole sorting criteria, as it's not possible to combine any of them with any other search criteria.
+
+> Sorting datasets with special criteria
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?provider=rwjson
+curl -X GET https://api.resourcewatch.org/v1/dataset?sort=-most-favourited
 ```
-
-> Return the datasets including layer
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?includes=layer
+curl -X GET https://api.resourcewatch.org/v1/dataset?sort=relevance&status=saved&search=agriculture
 ```
 
-> Return the datasets including all available relational resources
+### Relationships
+
+Available relationships: Any dataset relationship ['widget', 'layer', 'vocabulary', 'metadata']
+
+> Including relationships
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?includes=layer,widget,metadata,vocabulary
+curl -X GET https://api.resourcewatch.org/v1/dataset?sort=slug,-provider,userId&status=saved&includes=metadata,vocabulary,widget,layer
 ```
 
-### Pagination params
+### Advanced filters
 
-| Field           | Description                | Type
-| -------------   |:-------------:| -----:|
-| page[size]      | Number elements per page   | Number
-| page[number]    | Number of page             | Number
+By vocabulary-tag matching
 
-> Return the datasets of the page 2 with 5 elements per page
+> Matching vocabulary tags
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?page[size]=5&page[number]=2
+curl -X GET https://api.resourcewatch.org/v1/dataset?sort=slug,-provider,userId&status=saved&includes=metadata,vocabulary,widget,layer&vocabulary[legacy]=umd
 ```
 
-## How obtain a specific dataset
+### Pagination
 
-### Filter params
+Field        |         Description          |   Type
+------------ | :--------------------------: | -----:
+page[size]   | The number elements per page | Number
+page[number] |       The page number        | Number
 
-Available filters:
+> Paginating the output
 
-| Field         | Description           | Type
-| ------------- |:-------------:| -----:|
-| app           | Filter datasets on application (For filter or -- prep,gfw,etc.. -- for filter and prep@gfw@prep@etc..)               | Text
-| includes      | Include relational resources (metadata,layer,widget,vocabulary) | Text
+```shell
+curl -X GET https://api.resourcewatch.org/v1/dataset?sort=slug,-provider,userId&status=saved&includes=metadata,vocabulary,widget,layer&vocabulary[legacy]=threshold&page[number]=1
+curl -X GET https://api.resourcewatch.org/v1/dataset?sort=slug,-provider,userId&status=saved&includes=metadata,vocabulary,widget,layer&vocabulary[legacy]=threshold&page[number]=2
+```
 
-> To obtain the dataset:
+## How to get a specific dataset
+
+> To get a dataset:
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v1/dataset/51943691-eebc-4cb4-bdfb-057ad4fc2145
 ```
-> Example response:
 
-```json
+> Response:
+
+```shell
 {
-  "data": {
-    "id": "51943691-eebc-4cb4-bdfb-057ad4fc2145",
-    "type": "dataset",
-    "attributes": {
-      "application": [
-        "forest-atlas"
-      ],
-      "name": "Timber Production RDC (test)",
-      "subtitle": null,
-      "dataPath": null,
-      "attributesPath": null,
-      "connectorType": "document",
-      "provider": "csv",
-      "userId": "58750a56dfc643722bdd02ab",
-      "connectorUrl": "http://wri-forest-atlas.s3.amazonaws.com/COD/temp/annual%20timber%20production%20DRC%20%28test%29%20-%20Sheet1.csv",
-      "tableName": "index_51943691eebc4cb4bdfb057ad4fc2145",
-      "topics": [],
-      "tags": [],
-      "legend": {
-        "lat": "",
-        "date": [
-          "year"
-        ],
-        "long": "",
-        "region": [],
-        "country": []
-      },
-      "clonedHost": {
-        "hostProvider": null,
-        "hostUrl": null,
-        "hostId": null,
-        "hostType": null,
-        "hostPath": null
-      },
-      "status": "saved",
-      "overwrite": false
+    "data": {
+        "id": "51943691-eebc-4cb4-bdfb-057ad4fc2145",
+        "type": "dataset",
+        "attributes": {
+            "name": "Timber Production RDC (test)",
+            "slug": "Timber-Production-RDC-test-1490086842132",
+            "type": null,
+            "subtitle": null,
+            "application": ["forest-atlas"],
+            "dataPath": null,
+            "attributesPath": null,
+            "connectorType": "document",
+            "provider": "csv",
+            "userId": "58750a56dfc643722bdd02ab",
+            "connectorUrl": "http://wri-forest-atlas.s3.amazonaws.com/COD/temp/annual%20timber%20production%20DRC%20%28test%29%20-%20Sheet1.csv",
+            "tableName": "index_51943691eebc4cb4bdfb057ad4fc2145",
+            "status": "saved",
+            "overwrite": false,
+            "legend": {
+                "date": ["year"],
+                "region": [],
+                "country": [],
+                "long": "",
+                "lat": ""
+            },
+            "clonedHost": {},
+            "errorMessage": null,
+            "createdAt": "2017-01-25T21:48:27.535Z",
+            "updatedAt": "2017-01-25T21:48:28.675Z"
+        }
     }
-  },
-  "meta": {
-    "status": "saved",
-    "overwrite": false,
-    "updatedAt": "2017-01-25T21:48:28.675Z",
-    "createdAt": "2017-01-25T21:48:27.535Z"
-  }
 }
 ```
 
-> To obtain the dataset including specific relational resource:
+> To get the dataset including its relationships:
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset/06c44f9a-aae7-401e-874c-de13b7764959?includes=metadata
+curl -X GET https://api.resourcewatch.org/v1/dataset/06c44f9a-aae7-401e-874c-de13b7764959?includes=metadata,vocabulary,widget,layer
 ```
-
-> To obtain the dataset including specific relational resource on specific application:
-
-```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset/06c44f9a-aae7-401e-874c-de13b7764959?includes=metadata&app=rw
-```
-
-<aside class="success">
-Remember — the response is jsonapi format
-</aside>
 
 ## Creating a Dataset
-Important things first! In order to create a dataset, you need an authorization token. Follow the steps of this [guide](#generate-your-own-oauth-token) to generate it.
+
+To create a dataset, you will need an authorization token. Follow the steps of this [guide](#generate-your-own-oauth-token) to get yours.
 
 To create a dataset, you need to define all of the required fields in the request body. The fields that compose a dataset are:
 
-| Field             | Description                                                   | Type   | Values                                          | Required |
-| ------------------|:-------------------------------------------------------------:| ------:| -----------------------------------------------:|  -------:|
-| name              | Name of the dataset                                           | Text   | Any Text                                        | Yes
-| subtitle          | Subtitle of the dataset                                       | Text   | Any Text                                        | No
-| connectorType     | Connector type                                                | Text   | rest, json, document, wms                       | Yes
-| provider          | The provider of the connector                                 | Text   | rwjson, csv, cartodb, featureservice, gee, wms  | Yes
-| connectorUrl      | Url of the data                                               | Url    | Any url                                         | Yes for rest - Yes for json if data not present
-| dataPath          | Path to access data (In case that the data is not the root object, this param specifies with attribute contain the data in the source data)               | Text   | Any valid JSON key                              | Yes
-| application       | Application to which the dataset belongs                      | Array  | gfw, forest-atlas, rw, prep, aqueduct, data4sdg | Yes
-| data              | JSON DATA only for json connector if connectorUrl not present | Array  | [{},{},{}]                                      | Yes for json if connectorUrl not present
-| dataAttributes    | Data fields - for json connector if data present              | Object | {"key1": {"type": "string"},... }               | No
-| tableName         | Table name                                                    | Text   | Any valid table name                            | Yes for GEE
-| legend            | Legend for dataset. Keys for special fields                   | Object | Example: "legend": {"long": "123", "lat": "123", "country": ["pais"], "region": ["barrio"], "date": ["startDate", "endDate"]}} | No
-| dataOverwrite     | Allows to overwrite dataset's data                            | Boolean| default false                                   | No                                 | No
-| vocabularies      | Cluster of tags                                | Object | {"vocabularyOne": {"tags": [<tags>]},"vocabularyTwo": {"tags": [<tags>]}} | No
+Field               |                                                      Description                                                       |    Type |                                                                                                                Values |                                          Required
+------------------- | :--------------------------------------------------------------------------------------------------------------------: | ------: | --------------------------------------------------------------------------------------------------------------------: | ------------------------------------------------:
+name                |                                                      Dataset name                                                      |    Text |                                                                                                              Any Text |                                               Yes
+type                |                                                      Dataset type                                                      |    Text |                                                                                                              Any Text |                                                No
+subtitle            |                                                    Dataset subtitle                                                    |    Text |                                                                                                              Any Text |                                                No
+application         |                                          Applications the dataset belongs to                                           |   Array |                                                                                         Any valid application name(s) |                                               Yes
+connectorType       |                                                     Connector type                                                     |    Text |                                                                                                   rest, document, wms |                                               Yes
+provider            |                                               The connectorType provider                                               |    Text |                                                           cartodb, feature service, gee, csv, tsv, xml, json, nexgddp |                                               Yes
+connectorUrl        |                                                 Url of the data source                                                 |     Url |                                                                                                               Any url |    Yes (except for gee, nexgddp and json formats)
+tableName           |                                                       Table name                                                       |    Text |                                                                                                  Any valid table name |            No (just for GEE and nexgddp datasets)
+data                |                             JSON DATA only for json connector if connectorUrl not present                              |    JSON |                                                                                                            [{},{},{}] | No (just for json if connectorUrl is not present)
+dataPath            |                                           Path to the data in a json dataset                                           |    Text |                                                                                                    Any valid JSON key | No (just for json if connectorUrl is not present)
+dataAttributes      |                                    Data fields - for json connector if data present                                    |  Object |                                                                                     {"key1": {"type": "string"},... } | No (just for json if connectorUrl is not present)
+legend              |                                      Legend for dataset. Keys for special fields                                       |  Object | "legend": {"long": "123", "lat": "123", "country": ["pais"], "region": ["barrio"], "date": ["startDate", "endDate"]}} |                                                No
+overwrite           |                                          It allows to overwrite dataset data                                           | Boolean |                                                                                                            true/false |                                                No
+published           |                                           To set a public or private dataset                                           | Boolean |                                                                                                            true/false |                                                No
+protected           |                           If it's a protected layer (not is possible to delete if it's true)                           | Boolean |                                                                                                            true/false |                                                No
+verified            |                                    To generate a verified blockchain of the dataset                                    | Boolean |                                                                                                            true/false |                                                No
+vocabularies        |                                                    Cluster of tags                                                     |  Object |                                           `{"vocabularyOne": {"tags": [<tags>]},"vocabularyTwo": {"tags": [<tags>]}}` |                                                No
+widgetRelevantProps |                                          Group of relevant props of a widget                                           |   Array |                                                                                                              Any Text |                                                No
+layerRelevantProps  |                                           Group of relevant props of a layer                                           |   Array |                                                                                                              Any Text |                                                No
+subscribable        | Available dataset queries for subscriptions parameters accepted: `{{begin}}` for date begin and `{{end}}` for date end |  Object |                                                                             `{" <queryname>": "<querybodytemplate>"}` | No (just for json if connectorUrl is not present)
 
 There are some differences between datasets types.
 
-### Carto datasets
-> To create a Carto dataset, you have to do a POST with the following body:
+### Rest-Carto datasets
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset \
 -H "Authorization: Bearer <your-token>" \
 -H "Content-Type: application/json"  -d \
  '{
-   "dataset": {
-      "connectorType":"rest",
-      "provider":"cartodb",
-      "connectorUrl":"<cartoUrl>",
-      "application":[
-         "your", "apps"
-      ],
-      "name":"Example Carto Dataset",
-      more attributes...
-   }
+    "connectorType":"rest",
+    "provider":"cartodb",
+    "connectorUrl":"<cartoUrl>",
+    "application":[
+     "your", "apps"
+    ],
+    "name":"Example Carto Dataset"
 }'
 ```
 
@@ -308,86 +364,130 @@ curl -X POST https://api.resourcewatch.org/v1/dataset \
 -H "Authorization: Bearer <your-token>" \
 -H "Content-Type: application/json"  -d \
 '{
-   "dataset": {
-      "connectorType":"rest",
-      "provider":"cartodb",
-      "connectorUrl":"https://wri-01.carto.com/tables/wdpa_protected_areas/table",
-      "application":[
-         "gfw", "forest-atlas"
-      ],
-      "name":"World Database on Protected Areas -- Global"
-   }
+    "connectorType":"rest",
+    "provider":"cartodb",
+    "connectorUrl":"https://wri-01.carto.com/tables/wdpa_protected_areas/table",
+    "application":[
+     "gfw", "forest-atlas"
+    ],
+    "name":"World Database on Protected Areas -- Global"
 }'
 ```
 
 <aside class="notice">
-	Remember that create dataset is an authenticated endpoint!
+    This is an authenticated endpoint!
 </aside>
 
-### ArcGIS
-> To create a ArcGIS dataset, you have to do a POST with the following body:
+### Rest-ArcGIS feature Service
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset \
 -H "Authorization: Bearer <your-token>" \
 -H "Content-Type: application/json"  -d \
 '{
-   "dataset": {
-      "connectorType":"rest",
-      "provider":"featureservice",
-      "connectorUrl":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0?f=json",
-      "application":[
-         "prep"
-      ],
-      "name":"Uncontrolled Public-Use Airports -- U.S.",
-      more attributes...
-   }
+    "connectorType":"rest",
+    "provider":"featureservice",
+    "connectorUrl":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0?f=json",
+    "application":[
+     "prep"
+    ],
+    "name":"Uncontrolled Public-Use Airports -- U.S."
 }'
 ```
 
 <aside class="notice">
-  Remember that create dataset is an authenticated endpoint!
+    This is an authenticated endpoint!
 </aside>
 
-### CSV
-At the moment the CSV dataset service supports only semicolon-delimited files -- TSV files are not supported.
+### Rest-GEE
 
-The `connectorUrl` must be an accessible CSV file, non-compressed - zip, tar, tar.gz, etc are not supported.
+```shell
+curl -X POST https://api.resourcewatch.org/v1/dataset \
+-H "Authorization: Bearer <your-token>" \
+-H "Content-Type: application/json"  -d \
+'{
+    "connectorType":"rest",
+    "provider":"gee",
+    "tableName": "JRC/GSW1_0/GlobalSurfaceWater"
+    "application":[
+     "rw"
+    ],
+    "name":"Water occurrence"
+}'
+```
+
+### Rest-NEXGDDP
+
+```shell
+curl -X POST https://api.resourcewatch.org/v1/dataset \
+-H "Authorization: Bearer <your-token>" \
+-H "Content-Type: application/json"  -d \
+'{
+    "connectorType":"rest",
+    "provider":"nexgddp",
+    "tableName": "historical/ACCESS1_0"
+    "application":[
+     "rw"
+    ],
+    "name":"Nexgddp"
+}'
+```
+
+### Rasdaman
+
+The `connectorUrl` must be a URL pointing to a valid geotiff file.
+
+```shell
+curl -XPOST 'https://api.resourcewatch.org/v1/dataset' -d \
+-H 'Authorization: Bearer <your-token>'  \
+-H 'Content-Type: application/json' -d \
+'{
+    "connectorType":"rest",
+    "provider":"rasdaman",
+    "connectorUrl":"rw.dataset.raw/1508321309784_test_rasdaman_1b.tiff",
+    "application":[
+     "rw"
+    ],
+    "name":"rasdaman dataset"
+}'
+```
+
+### Document-CSV, Document-TSV, Document-XML
+
+The `connectorUrl` must be an accessible CSV, TSV or XML file, non-compressed - zip, tar, tar.gz, etc are not supported.
 
 CSV datasets support some optional fields on the creation process. They are:
 
-| Field             | Description                               | Type  | Values | Required |
-| -------------     |:-----------------------------------------:| -----:| -----:|  -----:|
-| legend            |                                                   | Object|               | No
-| -- lat            | Name of column with latitude value                | Text  | Any word      | No
-| -- long           | Name of column with longitude value               | text  | Any word      | No
-| -- date           | Name of columns with date value (ISO Format)      | Array | Any list word | No
-| -- region         | Name of columns with region value (ISO3 code)     | Array | Any list word | No
-| -- country        | Name of columns with country value (ISO3 code)    | Array | Any list word | No
+Field      |                  Description                   |   Type |        Values | Required
+---------- | :--------------------------------------------: | -----: | ------------: | -------:
+legend     |                                                | Object |               |       No
+-- lat     |       Name of column with latitude value       |   Text |      Any word |       No
+-- long    |      Name of column with longitude value       |   text |      Any word |       No
+-- date    |  Name of columns with date value (ISO Format)  |  Array | Any list word |       No
+-- region  | Name of columns with region value (ISO3 code)  |  Array | Any list word |       No
+-- country | Name of columns with country value (ISO3 code) |  Array | Any list word |       No
 
+z
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset \
 -H "Authorization: Bearer <your-token>" \
 -H "Content-Type: application/json"  -d \
 '{
-   "dataset": {
-      "connectorType":"document",
-      "provider":"csv",
-      "connectorUrl":"<csvUrl>",
-      "application":[
-         "your", "apps"
-      ],
-      "legend": {
-          "lat": "lat-column",
-          "long": "long-column",
-          "date": ["date1Column", "date2Column"],
-          "region": ["region1Column", "region2Column"],
-          "country": ["country1Column", "country2Column"]
-      }
-      "name":"Example CSV Dataset",
-      more attributes...
-   }
+    "connectorType":"document",
+    "provider":"csv",
+    "connectorUrl":"<csvUrl>",
+    "application":[
+     "your", "apps"
+    ],
+    "legend": {
+      "lat": "lat-column",
+      "long": "long-column",
+      "date": ["date1Column", "date2Column"],
+      "region": ["region1Column", "region2Column"],
+      "country": ["country1Column", "country2Column"]
+    },
+    "name":"Example CSV Dataset"
 }'
 ```
 
@@ -398,49 +498,135 @@ curl -X POST https://api.resourcewatch.org/v1/dataset \
 -H "Authorization: Bearer <your-token>" \
 -H "Content-Type: application/json"  -d \
 '{
-   "dataset": {
-      "connectorType":"document",
-      "provider":"csv",
-      "connectorUrl":"http://gfw2-data.s3.amazonaws.com/alerts-tsv/glad_headers.csv",
-      "application":[
-         "gfw"
-      ],
-      "legend": {
-          "lat": "lat",
-          "long": "lon"
-      },
-      "name":"Glad points"
-   }
+    "connectorType":"document",
+    "provider":"csv",
+    "connectorUrl":"https://gfw2-data.s3.amazonaws.com/alerts-tsv/glad_headers.csv",
+    "application":[
+     "gfw"
+    ],
+    "legend": {
+      "lat": "lat",
+      "long": "lon"
+    },
+    "name":"Glad points"
 }'
 ```
+
 <aside class="notice">
-  Remember that create dataset is an authenticated endpoint!
+    This is an authenticated endpoint!
 </aside>
 
-### JSON
-The JSON dataset service supports data from external json file or data as json array send in request body
+### Document-JSON
+
+The JSON dataset service supports data from external json file or data as json array send in request body.
 
 The `connectorUrl` must be an accessible JSON file
 
 JSON datasets support some optional fields in the creation process. They are:
 
-| Field             | Description                               | Type  | Values | Required |
-| ---------------   |:-----------------------------------------:| -----:| -----:|  -----:|
-| data              | JSON DATA only for json connector if connectorUrl not present | Array | [{},{},{}]    | Yes for json if connectorUrl not present
-| legend            |                                                               | Object|               | No
-| -- lat            | Name of column with latitude value                            | Text  | Any word      | No
-| -- long           | Name of column with longitude value                           | text  | Any word      | No
-| -- date           | Name of columns with date value (ISO Format)                  | Array | Any list word | No
-| -- region         | Name of columns with region value (ISO3 code)                 | Array | Any list word | No
-| -- country        | Name of columns with country value (ISO3 code)                | Array | Any list word | No
+Field      |                          Description                          |   Type |        Values |                                 Required
+---------- | :-----------------------------------------------------------: | -----: | ------------: | ---------------------------------------:
+data       | JSON DATA only for json connector if connectorUrl not present |  Array |    [{},{},{}] | Yes for json if connectorUrl not present
+legend     |                                                               | Object |               |                                       No
+-- lat     |              Name of column with latitude value               |   Text |      Any word |                                       No
+-- long    |              Name of column with longitude value              |   text |      Any word |                                       No
+-- date    |         Name of columns with date value (ISO Format)          |  Array | Any list word |                                       No
+-- region  |         Name of columns with region value (ISO3 code)         |  Array | Any list word |                                       No
+-- country |        Name of columns with country value (ISO3 code)         |  Array | Any list word |                                       No
 
 <aside class="notice">
-Remember — create dataset is an authenticated endpoint!
+    This is an authenticated endpoint!
 </aside>
 
+```shell
+curl -X POST https://api.resourcewatch.org/v1/dataset \
+-H "Authorization: Bearer <your-token>" \
+-H "Content-Type: application/json"  -d \
+'{
+    "connectorType":"document",
+    "provider":"json",
+    "connectorUrl":"<jsonURL>",
+    "application":[
+     "your", "apps"
+    ],
+    "legend": {
+      "lat": "lat-column",
+      "long": "long-column",
+      "date": ["date1Column", "date2Column"],
+      "region": ["region1Column", "region2Column"],
+      "country": ["country1Column", "country2Column"]
+    },
+    "name":"Example JSON Dataset",
+}'
+```
+
+It is also possible to create a JSON dataset by including the data directly in the request:
+
+```shell
+curl -X POST https://api.resourcewatch.org/v1/dataset \
+-H "Authorization: Bearer <your-token>" \
+-H "Content-Type: application/json"  -d \
+'{
+    "connectorType":"document",
+    "provider":"json",
+    "connectorUrl":"",
+    "application":[
+     "your", "apps"
+    ],
+    "data": {"myData":[
+            {"name":"nameOne", "id":"random1"},
+            {"name":"nameTow", "id":"random2"}
+          ]},
+    "legend": {
+      "lat": "lat-column",
+      "long": "long-column",
+      "date": ["date1Column", "date2Column"],
+      "region": ["region1Column", "region2Column"],
+      "country": ["country1Column", "country2Column"]
+    },
+    "name":"Example JSON Dataset"
+}'
+```
+
+## Uploading a Dataset (Binary)
+
+You can upload your raw data directly to S3 making use of the "upload" endpoint. This endpoint accepts a file in the property "dataset" and returns a valid connectorUrl. With this connectorUrl you can create or update a "document" dataset, or a raster dataset in the Rasdaman adapter.
+
+```shell
+curl -X POST https://api.resourcewatch.org/v1/dataset/upload \
+-H "Authorization: Bearer <your-token>" \
+-F provider=csv,
+-F dataset=@<your-file>
+```
+
+It returns the following information:
+
+> Response
+
+```json
+{
+  "connectorUrl": "rw.dataset.raw/tmp/upload_75755182b1ceda30abed717f655c077d-observed_temp.csv"
+}
+```
+
+```shell
+curl -X POST https://api.resourcewatch.org/v1/dataset \
+-H "Authorization: Bearer <your-token>" \
+-H "Content-Type: application/json"
+'{
+    "connectorType":"document",
+    "provider":"csv",
+    "connectorUrl":"rw.dataset.raw/tmp/upload_75755182b1ceda30abed717f655c077d-observed_temp.csv",
+    "application":[
+     "your", "apps"
+    ],
+    "name":"Example RAW Data Dataset"
+}'
+```
+
 ## Updating a Dataset
-In order to modify the dataset, you can PATCH a request.
-It accepts the same parameters as the _create dataset_ endpoint, and you will need an authentication token.
+
+In order to modify the dataset, you can PATCH a request. It accepts the same parameters as the _create dataset_ endpoint, and you will need an authentication token.
 
 > An example update request:
 
@@ -449,29 +635,29 @@ curl -X PATCH https://api.resourcewatch.org/v1/dataset/<dataset-id> \
 -H "Authorization: Bearer <your-token>" \
 -H "Content-Type: application/json" -d \
 '{
-	"dataset": {
-		"name": "Another name for the dataset"
-	}
+    "name": "Another name for the dataset"
 }'
 ```
+
 <aside class="notice">
-Remember — update dataset is an authenticated endpoint!
+    This is an authenticated endpoint!
 </aside>
 
 ## Deleting a Dataset
-You can delete a dataset! Just send a DELETE request to the endpoint:
+
+**When a dataset is deleted the user's applications that were present on the dataset will be removed from it. If this results in a dataset without applications, the dataset itself will be then deleted.**
 
 ```shell
 curl -X DELETE https://api.resourcewatch.org/v1/dataset/<dataset-id> \
 -H "Authorization: Bearer <your-token>"
 -H "Content-Type: application/json"
 ```
+
 <aside class="notice">
-Remember — delete dataset is an authenticated endpoint!
+    This is an authenticated endpoint!
 </aside>
 
 ## Cloning a Dataset
-You can clone a dataset! Just send a POST request to the endpoint:
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/5306fd54-df71-4e20-8b34-2ff464ab28be/clone \
@@ -479,7 +665,7 @@ curl -X POST https://api.resourcewatch.org/v1/dataset/5306fd54-df71-4e20-8b34-2f
 -H "Content-Type: application/json" -d \
 '{
   "dataset": {
-    "dataset_url": "/query/5306fd54-df71-4e20-8b34-2ff464ab28be?sql=select%20%2A%20from%20data%20limit%2010",
+    "datasetUrl": "/query/5306fd54-df71-4e20-8b34-2ff464ab28be?sql=select%20%2A%20from%20data%20limit%2010",
     "application": [
       "your",
       "apps"
@@ -489,13 +675,12 @@ curl -X POST https://api.resourcewatch.org/v1/dataset/5306fd54-df71-4e20-8b34-2f
 ```
 
 <aside class="notice">
-Remember — clone dataset is an authenticated endpoint!
+    This is an authenticated endpoint!
 </aside>
 
 ## Concatenate Data
-You can add more data to a dataset only if the dataset option overwrite (data_overwrite) is set to true.
 
-Just send a POST request to the endpoint:
+You can add more data to a dataset only if the overwrite dataset property has been set to true.
 
 > Concatenate data using external data source:
 
@@ -508,6 +693,7 @@ curl -X POST https://api.resourcewatch.org/v1/dataset/:dataset_id/concat \
    "dataPath": "data... etc"
 }'
 ```
+
 > Concatenate data using JSON array in post body:
 
 ```shell
@@ -520,13 +706,12 @@ curl -X POST https://api.resourcewatch.org/v1/dataset/:dataset_id/concat \
 ```
 
 <aside class="notice">
-Remember — concatenate dataset is an authenticated endpoint!
+    This is an authenticated endpoint!
 </aside>
 
 ## Overwrite Data
-You can overwrite data in a dataset only if the dataset option overwrite (data_overwrite) is set to true.
 
-Just send a POST request to the endpoint:
+You can overwrite the data if the overwrite dataset property has been set to true.
 
 > Overwrite data using external data source:
 
@@ -552,14 +737,12 @@ curl -X POST https://api.resourcewatch.org/v1/dataset/:dataset_id/data-overwrite
 ```
 
 <aside class="notice">
-Remember — overwrite dataset is an authenticated endpoint!
+    This is an authenticated endpoint!
 </aside>
 
-
 ## Overwrite specific Data
-You can update data in a dataset only if the dataset option overwrite (data_overwrite) is set to true.
 
-Just send a POST request to the endpoint:
+You can overwrite specific data if the overwrite dataset property has been set to true.
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/:dataset_id/data/:data_id \
@@ -572,13 +755,12 @@ curl -X POST https://api.resourcewatch.org/v1/dataset/:dataset_id/data/:data_id 
 ```
 
 <aside class="notice">
-Remember — overwrite dataset is an authenticated endpoint!
+    This is an authenticated endpoint!
 </aside>
 
 ## Delete specific Data
-You can delete data in a dataset only if the dataset option overwrite (data_overwrite) is set to true.
 
-Just send a DELETE request to the endpoint:
+You can delete specific data if the overwrite dataset property has been set to true.
 
 ```shell
 curl -X DELETE https://api.resourcewatch.org/v1/dataset/:dataset_id/data/:data_id \
@@ -587,5 +769,32 @@ curl -X DELETE https://api.resourcewatch.org/v1/dataset/:dataset_id/data/:data_i
 ```
 
 <aside class="notice">
-Remember — delete dataset is an authenticated endpoint!
+    This is an authenticated endpoint!
 </aside>
+
+## Dataset data sync
+
+To sync the data of a dataset, you need to choose the action type (concat or overwrite), a cron pattern and a valid url. This configuration should be set in the 'sync' property when creating or updating a document dataset.
+
+Please be sure that the 'overwrite' property is set to true. This could be used as a lock in order to not allow new updates even if the sync task is actually created.
+
+```shell
+curl -X POST https://api.resourcewatch.org/v1/dataset \
+-H "Authorization: Bearer <your-token>" \
+-H "Content-Type: application/json"
+'{
+    "connectorType":"document",
+    "provider":"csv",
+    "connectorUrl":"<csvUrl>",
+    "application":[
+     "your", "apps"
+    ],
+    "name":"Example SYNC Dataset",
+    "overwrite": true,
+    "sync": {
+        "action":"concat",
+        "cronPattern":"0 * * * * *",
+        "url":"<updateCsvUrl>"
+    }
+}'
+```
