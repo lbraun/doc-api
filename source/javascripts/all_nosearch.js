@@ -14,3 +14,5 @@ $(function() {
 window.onpopstate = function() {
   activateLanguage(getLanguageFromQueryString());
 };
+
+//= require ./app/_redirect-app

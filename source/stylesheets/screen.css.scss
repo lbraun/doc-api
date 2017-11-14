@@ -47,6 +47,26 @@ html, body {
   width: 20px;
 }
 
+@mixin embossed-bg {
+  background:
+    linear-gradient(to bottom, rgba(#000, 0.2), rgba(#000, 0) 8px),
+    linear-gradient(to top, rgba(#000, 0.2), rgba(#000, 0) 8px),
+    linear-gradient(to bottom, rgba($nav-embossed-border-top, 1), rgba($nav-embossed-border-top, 0) 1.5px),
+    linear-gradient(to top, rgba($nav-embossed-border-bottom, 1), rgba($nav-embossed-border-bottom, 0) 1.5px),
+    $nav-subitem-bg;
+}
+
+.gfw {
+  .tocify-wrapper>img {
+    height: 70px;
+  }
+}
+.rw {
+  .tocify-wrapper>img {
+
+  }
+}
+
 .toc-wrapper {
   transition: left 0.3s ease-in-out;
 
@@ -76,6 +96,7 @@ html, body {
     display: block;
     max-width: 200px;
     padding: 20px 5px;
+    margin: 0 auto;
   }
 
   &>.search {
