@@ -1,6 +1,6 @@
 # Subscriptions
 
-Subscription represents to wich datasets and analyisis a user can have access to.
+Subscriptions represent to which datasets and analyisis a user can subscribe to. These subscriptions can be either by email or _hooks_.
 
 <aside class="notice">
 Remember — All subscription endpoints need to be authenticated.
@@ -16,12 +16,16 @@ language      | Language of the subscriptions (used to select the email template
 resource      |   This field contains the subscription is of type email or hook   |             Object
 -- type       |                               Type                                |       EMAIL or URL
 -- content    |                           Email or url                            |               Text
-datasets      |               Array of datasets of the subscription               |              Array
 datasetsQuery |              Subscriptions to subscribable datasets               |              Array
--- id         |                           Id of dataset                           |   ObjectId -- type | Type of subscription defined in the dataset | Text -- params | Geographic area of the subscription | Object You only require datasets or datasetsQuery, not both.
+datasets      |               Array of datasets of the subscription               |              Array
+-- id         |                           Id of dataset                           |   ObjectId 
+-- type       | Type of subscription defined in the dataset                       | Text 
+-- params     | Geographic area of the subscription                               | Object 
+
+It's required to provide either `datasets` or `datasetsQuery`, but not both.
 
 <aside class="notice">
-Remember — All subscriptions are created unconfirmed and the process sends a message to the email of the subscription to confirm it.
+Remember — When subscriptions are created they are unconfirmed.  A message is sent to the email in `resource.content` with a link to confirm it.
 </aside>
 
 You can create a subscription with 6 different params:
@@ -44,8 +48,8 @@ curl -X POST https://api.resourcewatch.org/v1/subscriptions \
    "application": "<application>",
    "language": "<language>",
    "resource": {
-       "type": "<type>",
-       "content": "<content>"
+       "type": "EMAIL",
+       "content": "email@account.com"
    },
    "datasets" : ["<dataset>"],
    "params": {
