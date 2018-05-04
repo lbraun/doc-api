@@ -1,7 +1,6 @@
 ruby '>=2.4.1'
 source 'https://rubygems.org'
 
-# Middleman
 gem 'json', '~>2.1.0'
 gem 'middleman', '~>4.2.1'
 gem 'middleman-syntax', '~> 3.0.0'
